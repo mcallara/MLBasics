@@ -26,13 +26,9 @@ def cost(Theta,X,y):
 	#Theta tiene que ser one-dimensional o columna.
 	return sum((np.dot(X,Theta.transpose()).reshape(-1,)-y)**2)/X.shape[0]
 
-#def deriv(Theta,X,y,comp):
-#	return (np.dot((np.dot(X,Theta.transpose()).reshape(-1,)-y),X[:,comp]))/X.shape[0]
-
 def deriv(Theta,X,y):
 	return (np.dot(X.transpose(),(np.dot(X,Theta)-y)))/X.shape[0]
 
-#theta=theta-(alpha/m)*(X'*(X*theta-y));
 def sto(Theta,X,y,alpha,maxite,tol):
 	ite=0
 	delta=np.inf
@@ -42,7 +38,6 @@ def sto(Theta,X,y,alpha,maxite,tol):
 		aux[ite,]=Theta-alpha*deriv(Theta,X,y)
 		Theta=aux[ite,]
 		delta=J-cost(Theta,X,y)
-		#print("En la iteracion: {0} los valores de Theta son: {1} y delta es {2}".format(ite,aux[ite,],delta))
 		ite+=1
 	print("Max ite: {0}, Delta: {1}".format(ite,delta))
 	return aux[:ite,]
@@ -56,7 +51,7 @@ y=cars.nlabels
 
 data=data(X,y)
 
-#Initializice Theta
+#Initialize Theta
 #Theta=np.zeros([data.features+1])
 Theta=np.random.uniform(0,1,data.features+1)
 
@@ -68,17 +63,17 @@ tol=0.000001
 #Results
 ThetaHist=sto(Theta,data.Xaugnorm,y,alpha,maxite,tol)
 Theta=ThetaHist[-1,]
-print('Theta GD:',Theta,'Costo GD:',cost(Theta,data.Xaugnorm,y))
+print('Theta GD:',Theta,'Cost GD:',cost(Theta,data.Xaugnorm,y))
 
 #Normal Equation Result
 ThetaNorm=normaleq(data.Xaugnorm,y)
-print('Theta Normal Eq for Xnorm ',ThetaNorm,'Costo Normal Equation Norm:',cost(ThetaNorm,data.Xaugnorm,y))
+print('Theta Normal Eq for Xnorm ',ThetaNorm,'Cost Normal Equation Norm:',cost(ThetaNorm,data.Xaugnorm,y))
 
 print('---------------------------------------')
-print('Sin normalizar')
+print('Without Normalizing')
 print('---------------------------------------')
 
-#Initializice Theta
+#Initialize Theta
 #Theta=np.zeros([data.features+1])
 Theta=np.random.uniform(0,1,data.features+1)
 
@@ -88,11 +83,11 @@ maxite=100000
 tol=0.0000001
 ThetaHist=sto(Theta,data.Xaug,y,alpha,maxite,tol)
 Theta=ThetaHist[-1,]
-print('Theta GD:',Theta,'Costo GD:',cost(Theta,data.Xaug,y))
+print('Theta GD:',Theta,'Cost GD:',cost(Theta,data.Xaug,y))
 
 #Normal Equation Result
 ThetaNorm=normaleq(data.Xaug,y)
-print('Theta Normal Eq',ThetaNorm,'Costo Normal Equation:',cost(ThetaNorm,data.Xaug,y))
+print('Theta Normal Eq',ThetaNorm,'Cost Normal Equation:',cost(ThetaNorm,data.Xaug,y))
 #import matplotlib.pyplot as plt
 #plt.plot(histJ)
 #plt.show()
